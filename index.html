@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Learn Apache Spark Interactively</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Interactive Apache Spark</p>
+        <h1>Spark Studio</h1>
+      </div>
+      <nav aria-label="Site sections">
+        <a href="#curriculum">Curriculum</a>
+        <a href="#playground">Explorer</a>
+        <a href="#execution-flow">Execution Flow</a>
+        <a href="#concept-lab">Concept Lab</a>
+        <a href="#advanced">Advanced</a>
+        <a href="#roadmap">Roadmap</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="kicker">From first DataFrame to production-scale tuning</p>
+          <h2>Learn Spark by watching data move.</h2>
+          <p>
+            A GitHub Pages learning lab for Apache Spark fundamentals,
+            internals, SQL, streaming, machine learning, and performance.
+            Every concept pairs a clear example with a visual mental model.
+          </p>
+          <div class="hero-actions">
+            <a class="button-link primary-link" href="#curriculum">Start curriculum</a>
+            <a class="button-link ghost-link" href="#playground">Open live explorer</a>
+          </div>
+        </div>
+        <div class="metric-strip" aria-label="Current execution summary">
+          <div>
+            <span>6</span>
+            <small>learning tracks</small>
+          </div>
+          <div>
+            <span>24</span>
+            <small>core modules</small>
+          </div>
+          <div>
+            <span>1</span>
+            <small>live simulator</small>
+          </div>
+        </div>
+      </section>
+
+      <section id="curriculum" class="section-block">
+        <div class="section-heading">
+          <p class="eyebrow">Curriculum</p>
+          <h2>Fundamentals first, then the internals that make Spark fast.</h2>
+          <p>
+            Each module is designed around a small dataset, a short Spark
+            snippet, and an interactive visualization target.
+          </p>
+        </div>
+
+        <div class="track-grid">
+          <article class="track-card">
+            <div class="track-number">01</div>
+            <h3>Spark Foundations</h3>
+            <p>Cluster roles, SparkSession, jobs, stages, tasks, and why distributed execution matters.</p>
+            <pre><code>spark = SparkSession.builder.appName("orders").getOrCreate()
+df = spark.read.csv("orders.csv", header=True)</code></pre>
+            <ul>
+              <li>Spark driver, executors, and cluster manager</li>
+              <li>Transformations vs actions</li>
+              <li>Jobs, stages, tasks, and partitions</li>
+              <li>Local mode vs cluster mode</li>
+            </ul>
+          </article>
+
+          <article class="track-card featured-card">
+            <div class="track-number">02</div>
+            <h3>DataFrames and Spark SQL</h3>
+            <p>The main API students should master first: schemas, columns, filtering, aggregation, and SQL.</p>
+            <pre><code>orders.where("amount >= 50")
+  .groupBy("city")
+  .agg(sum("amount").alias("revenue"))</code></pre>
+            <ul>
+              <li>Schema inference and explicit schemas</li>
+              <li><code>select</code>, <code>filter</code>, <code>withColumn</code></li>
+              <li>Aggregations and window functions</li>
+              <li>SQL views and query plans</li>
+            </ul>
+          </article>
+
+          <article class="track-card">
+            <div class="track-number">03</div>
+            <h3>RDD Mental Model</h3>
+            <p>Understand lineage, immutability, partition-level work, and the lower-level model beneath DataFrames.</p>
+            <pre><code>rdd = sc.textFile("logs")
+errors = rdd.filter(lambda line: "ERROR" in line)
+errors.count()</code></pre>
+            <ul>
+              <li>RDD creation and lineage</li>
+              <li>Narrow and wide dependencies</li>
+              <li>Pair RDDs and key-value operations</li>
+              <li>When RDDs still make sense</li>
+            </ul>
+          </article>
+
+          <article class="track-card">
+            <div class="track-number">04</div>
+            <h3>Execution Internals</h3>
+            <p>See how Spark turns code into logical plans, optimized plans, physical plans, and tasks.</p>
+            <pre><code>orders.groupBy("city").count().explain("formatted")</code></pre>
+            <ul>
+              <li>Lazy evaluation and DAGs</li>
+              <li>Catalyst optimizer</li>
+              <li>Tungsten execution engine</li>
+              <li>Adaptive Query Execution</li>
+            </ul>
+          </article>
+
+          <article class="track-card">
+            <div class="track-number">05</div>
+            <h3>Data Engineering Patterns</h3>
+            <p>Read, transform, validate, and write reliable datasets using production-friendly patterns.</p>
+            <pre><code>clean.write
+  .partitionBy("event_date")
+  .mode("overwrite")
+  .parquet("s3://lake/silver/orders")</code></pre>
+            <ul>
+              <li>CSV, JSON, Parquet, ORC, and Delta-style tables</li>
+              <li>Partitioning and file layout</li>
+              <li>Deduplication and data quality checks</li>
+              <li>Incremental batch pipelines</li>
+            </ul>
+          </article>
+
+          <article class="track-card">
+            <div class="track-number">06</div>
+            <h3>Performance and Scale</h3>
+            <p>Learn the causes of slow Spark jobs: shuffles, skew, spills, bad joins, tiny files, and poor partitioning.</p>
+            <pre><code>spark.conf.set("spark.sql.adaptive.enabled", "true")
+large.join(broadcast(dim), "product_id")</code></pre>
+            <ul>
+              <li>Shuffle cost and stage boundaries</li>
+              <li>Broadcast, sort-merge, and shuffle hash joins</li>
+              <li>Caching, persistence, and checkpointing</li>
+              <li>Skew handling and partition tuning</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="playground" class="workspace">
+        <aside class="panel lesson-panel">
+          <p class="eyebrow">Live Module</p>
+          <h2>Lazy Evaluation Explorer</h2>
+          <ol>
+            <li>Add transformations. Notice that the output does not change.</li>
+            <li>Run an action. Spark executes the accumulated plan.</li>
+            <li>Add <code>groupBy</code>. The DAG splits into two stages because a shuffle is required.</li>
+          </ol>
+          <div class="callout">
+            Transformations are lazy. Actions are eager.
+          </div>
+          <div class="mini-metrics">
+            <div>
+              <span id="queuedCount">0</span>
+              <small>queued</small>
+            </div>
+            <div>
+              <span id="stageCount">0</span>
+              <small>stages</small>
+            </div>
+            <div>
+              <span id="rowCount">8</span>
+              <small>rows</small>
+            </div>
+          </div>
+        </aside>
+
+        <section class="panel builder-panel">
+          <div class="panel-heading">
+            <h2>Query Builder</h2>
+            <button id="resetButton" class="secondary">Reset</button>
+          </div>
+
+          <div class="code-window" aria-label="Spark code preview">
+            <div class="window-dots" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+            <pre id="codePreview"><code>orders</code></pre>
+          </div>
+
+          <div class="controls" aria-label="Transformation controls">
+            <button data-op="filterHighValue">Filter amount &gt;= 50</button>
+            <button data-op="selectCityAmount">Select city, amount</button>
+            <button data-op="withTax">Add tax column</button>
+            <button data-op="groupByCity">Group by city</button>
+          </div>
+
+          <div class="action-row">
+            <button id="showButton" class="primary">Run show()</button>
+            <button id="countButton" class="primary">Run count()</button>
+          </div>
+
+          <div class="status" id="executionStatus">
+            Waiting for transformations. No Spark job has run yet.
+          </div>
+        </section>
+      </section>
+
+      <section id="dag" class="panel dag-panel">
+        <div class="panel-heading">
+          <h2>Logical Plan and DAG</h2>
+          <span id="shuffleBadge" class="badge">No shuffle</span>
+        </div>
+        <div class="dag-grid">
+          <div>
+            <h3>Queued Plan</h3>
+            <div id="planList" class="plan-list"></div>
+          </div>
+          <div>
+            <h3>Execution Graph</h3>
+            <div id="dagCanvas" class="dag-canvas" aria-label="Spark execution graph"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="results" class="results-grid">
+        <section class="panel">
+          <h2>Source Data</h2>
+          <div class="table-wrap">
+            <table id="sourceTable"></table>
+          </div>
+        </section>
+        <section class="panel">
+          <h2>Output After Action</h2>
+          <div id="resultHint" class="empty-state">
+            Add transformations, then run an action.
+          </div>
+          <div class="table-wrap">
+            <table id="resultTable"></table>
+          </div>
+        </section>
+      </section>
+
+      <section id="execution-flow" class="section-block">
+        <div class="section-heading">
+          <p class="eyebrow">End-to-End Execution</p>
+          <h2>Click through a Spark job from initialization to completion.</h2>
+          <p>
+            Follow the full path: SparkSession creation, cluster resource
+            negotiation, DAG planning, stage boundaries, task scheduling,
+            executor work, shuffle exchange, and result collection.
+          </p>
+        </div>
+
+        <section class="flow-shell">
+          <div class="job-overview" aria-label="Clickable Spark job execution overview">
+            <div class="overview-title">
+              <p class="eyebrow">Clickable Architecture Map</p>
+              <h3>Internals of Spark Job Execution</h3>
+            </div>
+            <div class="overview-controls">
+              <button id="revealNextFlow" class="primary">Reveal next step</button>
+              <button id="revealAllFlow" class="secondary">Reveal all</button>
+              <button id="resetFlowReveal" class="secondary">Reset</button>
+              <span id="revealProgress">Step 1 of 8</span>
+            </div>
+
+            <button class="overview-card driver-overview" data-flow-jump="session" data-reveal-step="1">
+              <strong>Driver Program</strong>
+              <code>spark = SparkSession.builder...</code>
+              <code>df.filter(...)</code>
+              <code>df.groupBy(...)</code>
+              <code class="action-code">df.count()</code>
+              <small>Action creates the job</small>
+            </button>
+
+            <button class="overview-card context-overview" data-flow-jump="session" data-reveal-step="2">
+              <strong>SparkContext</strong>
+              <small>Application connection to the cluster</small>
+            </button>
+
+            <button class="overview-card manager-overview" data-flow-jump="cluster" data-reveal-step="3">
+              <strong>Cluster Manager</strong>
+              <small>Allocates resources and starts executors</small>
+            </button>
+
+            <button class="overview-card scheduler-overview" data-flow-jump="dag" data-reveal-step="4">
+              <strong>DAG Scheduler</strong>
+              <small>Builds the operator DAG and splits stages</small>
+              <div class="overview-mini-dag">
+                <span>RDD 1</span>
+                <span>RDD 2</span>
+                <span>Shuffle</span>
+                <span>Stage 1</span>
+              </div>
+            </button>
+
+            <button class="overview-card task-overview" data-flow-jump="tasks" data-reveal-step="5">
+              <strong>Task Scheduler</strong>
+              <small>Submits task sets when stages are ready</small>
+              <div class="overview-task-stack">
+                <span></span><span></span><span></span>
+              </div>
+            </button>
+
+            <button class="overview-card worker worker-one" data-flow-jump="executors" data-reveal-step="6">
+              <strong>Worker Node</strong>
+              <span>Executor</span>
+              <small>Task Task</small>
+            </button>
+
+            <button class="overview-card worker worker-two" data-flow-jump="execute" data-reveal-step="7">
+              <strong>Worker Node</strong>
+              <span>Executor</span>
+              <small>Task Task</small>
+            </button>
+
+            <button class="overview-card worker worker-three" data-flow-jump="shuffle" data-reveal-step="8">
+              <strong>Worker Node</strong>
+              <span>Executor</span>
+              <small>Shuffle files + tasks</small>
+            </button>
+
+            <div class="overview-line line-driver-manager" data-reveal-step="3"></div>
+            <div class="overview-line line-driver-context" data-reveal-step="2"></div>
+            <div class="overview-line line-context-scheduler" data-reveal-step="4"></div>
+            <div class="overview-line line-scheduler-task" data-reveal-step="5"></div>
+            <div class="overview-line line-manager-workers" data-reveal-step="6"></div>
+            <div class="overview-line line-task-workers" data-reveal-step="8"></div>
+          </div>
+
+          <div class="flow-map" aria-label="Clickable Spark execution flow">
+            <button class="flow-node active" data-flow="session">
+              <span>1</span>
+              <strong>SparkSession</strong>
+              <small>Driver starts SparkContext</small>
+            </button>
+            <button class="flow-node" data-flow="cluster">
+              <span>2</span>
+              <strong>Cluster Manager</strong>
+              <small>Resources requested</small>
+            </button>
+            <button class="flow-node" data-flow="executors">
+              <span>3</span>
+              <strong>Executors</strong>
+              <small>Processes launched</small>
+            </button>
+            <button class="flow-node" data-flow="logical">
+              <span>4</span>
+              <strong>Logical Plan</strong>
+              <small>Transformations recorded</small>
+            </button>
+            <button class="flow-node" data-flow="dag">
+              <span>5</span>
+              <strong>DAG Scheduler</strong>
+              <small>Stages created</small>
+            </button>
+            <button class="flow-node" data-flow="tasks">
+              <span>6</span>
+              <strong>Task Scheduler</strong>
+              <small>Tasks assigned</small>
+            </button>
+            <button class="flow-node" data-flow="execute">
+              <span>7</span>
+              <strong>Executor Work</strong>
+              <small>Tasks process partitions</small>
+            </button>
+            <button class="flow-node" data-flow="shuffle">
+              <span>8</span>
+              <strong>Shuffle</strong>
+              <small>Data moves by key</small>
+            </button>
+            <button class="flow-node" data-flow="result">
+              <span>9</span>
+              <strong>Result</strong>
+              <small>Action returns data</small>
+            </button>
+          </div>
+
+          <div class="flow-detail">
+            <div class="flow-detail-header">
+              <div>
+                <p class="eyebrow" id="flowCategory">Initialization</p>
+                <h3 id="flowTitle">SparkSession creates SparkContext</h3>
+              </div>
+              <span class="badge" id="flowBadge">Driver</span>
+            </div>
+
+            <div class="flow-content-grid">
+              <div class="panel-flat">
+                <h4>What Happens</h4>
+                <p id="flowExplanation"></p>
+              </div>
+              <div class="panel-flat">
+                <h4>Code or Internal Call</h4>
+                <pre id="flowCode"><code></code></pre>
+              </div>
+              <div class="panel-flat">
+                <h4>Cluster View</h4>
+                <div id="flowVisual" class="cluster-visual"></div>
+              </div>
+              <div class="panel-flat">
+                <h4>Student Checkpoint</h4>
+                <p id="flowCheckpoint"></p>
+                <div class="flow-tip" id="flowTip"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section id="concept-lab" class="section-block">
+        <div class="section-heading">
+          <p class="eyebrow">Interactive Concept Lab</p>
+          <h2>One simulation pattern for every Spark concept.</h2>
+          <p>
+            Select a concept, adjust the controls, and watch the code, execution
+            plan, partitions, and explanation update together.
+          </p>
+        </div>
+
+        <section class="simulation-shell">
+          <aside class="simulation-sidebar" aria-label="Spark concept selector">
+            <button class="sim-tab active" data-sim="partitions">
+              <span>Partitions</span>
+              <small>Rows split across tasks</small>
+            </button>
+            <button class="sim-tab" data-sim="shuffle">
+              <span>Shuffle</span>
+              <small>Records move by key</small>
+            </button>
+            <button class="sim-tab" data-sim="joins">
+              <span>Joins</span>
+              <small>Strategy and movement</small>
+            </button>
+            <button class="sim-tab" data-sim="cache">
+              <span>Caching</span>
+              <small>Reuse vs recompute</small>
+            </button>
+            <button class="sim-tab" data-sim="skew">
+              <span>Skew</span>
+              <small>Hot keys slow stages</small>
+            </button>
+            <button class="sim-tab" data-sim="streaming">
+              <span>Streaming</span>
+              <small>Watermarks and late data</small>
+            </button>
+          </aside>
+
+          <div class="simulation-main">
+            <div class="simulation-header">
+              <div>
+                <p class="eyebrow" id="simLevel">Fundamental</p>
+                <h3 id="simTitle">Partitions Explorer</h3>
+              </div>
+              <span class="badge" id="simBadge">Narrow work</span>
+            </div>
+
+            <div class="simulation-grid">
+              <div class="sim-controls panel-flat">
+                <h4>Controls</h4>
+                <div id="simControls"></div>
+              </div>
+
+              <div class="sim-visual panel-flat">
+                <h4>Visual Execution</h4>
+                <div id="simVisual" class="partition-visual"></div>
+              </div>
+
+              <div class="sim-code panel-flat">
+                <h4>Spark Example</h4>
+                <pre id="simCode"><code></code></pre>
+              </div>
+
+              <div class="sim-explain panel-flat">
+                <h4>What Spark Is Doing</h4>
+                <p id="simExplanation"></p>
+                <div id="simResult" class="sim-result"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section id="advanced" class="section-block">
+        <div class="section-heading">
+          <p class="eyebrow">Advanced Concepts</p>
+          <h2>Modules to add after the first simulator.</h2>
+        </div>
+        <div class="concept-grid">
+          <article>
+            <h3>Join Strategy Lab</h3>
+            <p>Compare broadcast, sort-merge, and shuffle hash joins with table sizes and partition counts.</p>
+            <code>fact.join(broadcast(dim), "id")</code>
+          </article>
+          <article>
+            <h3>Shuffle Visualizer</h3>
+            <p>Animate records moving across partitions during <code>groupBy</code>, <code>distinct</code>, and joins.</p>
+            <code>events.repartition("user_id")</code>
+          </article>
+          <article>
+            <h3>Skew Clinic</h3>
+            <p>Show one overloaded key slowing a whole stage, then fix it with salting and AQE.</p>
+            <code>df.groupBy("country").count()</code>
+          </article>
+          <article>
+            <h3>Structured Streaming</h3>
+            <p>Teach micro-batches, watermarks, state, late data, and output modes with a moving event stream.</p>
+            <code>stream.withWatermark("event_time", "10 minutes")</code>
+          </article>
+          <article>
+            <h3>MLlib Pipeline</h3>
+            <p>Build a visual pipeline for feature transforms, estimators, models, and evaluators.</p>
+            <code>Pipeline(stages=[indexer, assembler, model])</code>
+          </article>
+          <article>
+            <h3>Production Debugging</h3>
+            <p>Read Spark UI symptoms: long tasks, spill, skew, failed stages, storage pressure, and tiny files.</p>
+            <code>df.explain("cost")</code>
+          </article>
+        </div>
+      </section>
+
+      <section id="roadmap" class="section-block roadmap">
+        <div class="section-heading">
+          <p class="eyebrow">Build Roadmap</p>
+          <h2>How this site should grow.</h2>
+        </div>
+        <div class="timeline">
+          <div>
+            <strong>Phase 1</strong>
+            <span>Static curriculum, lazy evaluation, DAG, and shuffle basics.</span>
+          </div>
+          <div>
+            <strong>Phase 2</strong>
+            <span>Partition simulator, join strategy lab, caching lab, and Spark SQL explain plans.</span>
+          </div>
+          <div>
+            <strong>Phase 3</strong>
+            <span>Structured Streaming, MLlib, AQE, skew tuning, and Spark UI debugging scenarios.</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
