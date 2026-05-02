@@ -602,6 +602,163 @@ button:hover {
   gap: 20px;
 }
 
+.lazy-page .section-block {
+  padding-top: 18px;
+}
+
+.lazy-page .section-heading {
+  margin-bottom: 8px;
+}
+
+.lazy-page .section-heading h2 {
+  font-size: clamp(1.35rem, 2.4vw, 2rem);
+}
+
+.lazy-page .section-heading p:not(.eyebrow) {
+  margin-top: 8px;
+}
+
+.lazy-page .workspace {
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.lazy-page .panel {
+  padding: 12px;
+}
+
+.lazy-page .panel-heading {
+  margin-bottom: 10px;
+}
+
+.lazy-page .lesson-panel ol {
+  margin: 10px 0;
+  padding-left: 18px;
+  line-height: 1.42;
+  font-size: 0.82rem;
+}
+
+.lazy-page .lesson-panel li + li {
+  margin-top: 7px;
+}
+
+.lazy-page .callout {
+  padding: 9px 10px;
+  font-size: 0.82rem;
+}
+
+.lazy-page .mini-metrics {
+  margin-top: 10px;
+}
+
+.lazy-page .mini-metrics div {
+  padding: 9px;
+}
+
+.lazy-page .mini-metrics span {
+  font-size: 1.15rem;
+}
+
+.lazy-page .window-dots {
+  padding: 8px 10px;
+}
+
+.lazy-page .window-dots span {
+  width: 8px;
+  height: 8px;
+}
+
+.lazy-page pre {
+  min-height: 92px;
+  padding: 11px;
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+
+.lazy-page .controls,
+.lazy-page .action-row {
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.lazy-page button {
+  min-height: 32px;
+  padding: 7px 10px;
+  font-size: 0.76rem;
+}
+
+.lazy-page .status {
+  margin-top: 10px;
+  padding: 10px;
+  font-size: 0.78rem;
+}
+
+.lazy-page .dag-panel,
+.lazy-page .results-grid {
+  margin-top: 12px;
+}
+
+.lazy-page .dag-grid {
+  grid-template-columns: 250px minmax(0, 1fr);
+  gap: 12px;
+}
+
+.lazy-page .plan-list {
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.lazy-page .plan-item,
+.lazy-page .empty-state {
+  padding: 9px;
+  font-size: 0.78rem;
+}
+
+.lazy-page .dag-canvas {
+  min-height: 124px;
+  grid-template-columns: repeat(4, minmax(96px, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.lazy-page .dag-node {
+  min-height: 60px;
+  padding: 9px;
+}
+
+.lazy-page .dag-node strong {
+  font-size: 0.78rem;
+}
+
+.lazy-page .dag-node small {
+  font-size: 0.68rem;
+}
+
+.lazy-page .badge {
+  padding: 5px 8px;
+  font-size: 0.72rem;
+}
+
+.lazy-page .results-grid {
+  gap: 12px;
+}
+
+.lazy-page .table-wrap {
+  margin-top: 8px;
+  max-height: 220px;
+  overflow: auto;
+}
+
+.lazy-page table {
+  font-size: 0.78rem;
+}
+
+.lazy-page th,
+.lazy-page td {
+  padding: 7px 8px;
+}
+
 .flow-shell {
   display: grid;
   grid-template-columns: 330px minmax(0, 1fr);

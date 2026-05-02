@@ -73,7 +73,7 @@ export function LazyEvaluationPage() {
   };
 
   return (
-    <>
+    <div className="lazy-page">
       <section className="section-block page-section">
         <SectionHeading eyebrow="Live Module" title="Lazy Evaluation Explorer">
           Add transformations, run an action, and watch Spark build and execute the queued plan.
@@ -131,6 +131,6 @@ export function LazyEvaluationPage() {
         <section className="panel"><h2>Source Data</h2><div className="table-wrap"><DataTable rows={sourceRows} /></div></section>
         <section className="panel"><h2>Output After Action</h2>{!hasExecuted ? <div className="empty-state">Add transformations, then run an action.</div> : lastAction === "count" ? <div className="empty-state">count() returned {resultRows.length}</div> : <div className="table-wrap"><DataTable rows={resultRows} /></div>}</section>
       </section>
-    </>
+    </div>
   );
 }
