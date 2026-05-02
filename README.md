@@ -1,9 +1,26 @@
 # Learn Apache Spark Interactively
 
-A dark-mode, page-oriented GitHub Pages learning lab for Apache Spark, covering
+A dark-mode, page-oriented React learning lab for Apache Spark, covering
 fundamentals through advanced production concepts with examples and interactive
 visuals.
 
-Open `index.html` in a browser to start from the dashboard. Dedicated pages are
-available for the curriculum, Lazy Evaluation Explorer, End-to-End Execution
-Flow, Concept Lab, advanced modules, and roadmap.
+## Tech stack
+
+- Vite
+- React
+- TypeScript
+- React Router
+- GitHub Pages deployment through GitHub Actions
+
+## Local development
+
+```bash
+npm install
+npm run dev
+```
+
+Build output is generated in `dist/`:
+
+```bash
+npm run build
+```

@@ -4,93 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Learn Apache Spark Interactively</title>
-    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header class="topbar">
-      <div>
-        <p class="eyebrow">Interactive Apache Spark</p>
-        <h1>Spark Studio</h1>
-      </div>
-      <nav aria-label="Site pages">
-        <a href="curriculum.html">Curriculum</a>
-        <a href="lazy-evaluation.html">Explorer</a>
-        <a href="execution-flow.html">Execution Flow</a>
-        <a href="concept-lab.html">Concept Lab</a>
-        <a href="advanced.html">Advanced</a>
-        <a href="roadmap.html">Roadmap</a>
-      </nav>
-    </header>
-
-    <main>
-      <section class="hero">
-        <div class="hero-copy">
-          <p class="kicker">From first DataFrame to production-scale tuning</p>
-          <h2>Learn Spark by watching data move.</h2>
-          <p>
-            A page-oriented GitHub Pages learning lab for Apache Spark
-            fundamentals, execution internals, SQL, streaming, machine
-            learning, and performance. Pick a module and learn at your pace.
-          </p>
-          <div class="hero-actions">
-            <a class="button-link primary-link" href="execution-flow.html">Start with execution flow</a>
-            <a class="button-link ghost-link" href="lazy-evaluation.html">Open live explorer</a>
-          </div>
-        </div>
-        <div class="metric-strip" aria-label="Current site summary">
-          <div>
-            <span>6</span>
-            <small>learning pages</small>
-          </div>
-          <div>
-            <span>9</span>
-            <small>execution steps</small>
-          </div>
-          <div>
-            <span>6</span>
-            <small>concept simulations</small>
-          </div>
-        </div>
-      </section>
-
-      <section class="section-block">
-        <div class="section-heading">
-          <p class="eyebrow">Learning Paths</p>
-          <h2>Choose the page you want to study.</h2>
-        </div>
-        <div class="track-grid">
-          <a class="track-card page-card featured-card" href="execution-flow.html">
-            <div class="track-number">01</div>
-            <h3>End-to-End Execution Flow</h3>
-            <p>Click through SparkSession, SparkContext, cluster manager, DAG Scheduler, Task Scheduler, executors, tasks, shuffle, and result collection.</p>
-          </a>
-          <a class="track-card page-card" href="lazy-evaluation.html">
-            <div class="track-number">02</div>
-            <h3>Lazy Evaluation Explorer</h3>
-            <p>Build transformations, trigger actions, and watch the logical plan and DAG update.</p>
-          </a>
-          <a class="track-card page-card" href="concept-lab.html">
-            <div class="track-number">03</div>
-            <h3>Interactive Concept Lab</h3>
-            <p>Simulate partitions, shuffle, joins, caching, skew, and streaming with shared controls.</p>
-          </a>
-          <a class="track-card page-card" href="curriculum.html">
-            <div class="track-number">04</div>
-            <h3>Full Curriculum</h3>
-            <p>Review the complete path from Spark foundations to performance and scale.</p>
-          </a>
-          <a class="track-card page-card" href="advanced.html">
-            <div class="track-number">05</div>
-            <h3>Advanced Modules</h3>
-            <p>See planned labs for joins, skew, streaming, MLlib, and Spark UI debugging.</p>
-          </a>
-          <a class="track-card page-card" href="roadmap.html">
-            <div class="track-number">06</div>
-            <h3>Build Roadmap</h3>
-            <p>Track how the learning lab should grow across future phases.</p>
-          </a>
-        </div>
-      </section>
-    </main>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
