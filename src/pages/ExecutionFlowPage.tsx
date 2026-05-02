@@ -60,14 +60,14 @@ export function ExecutionFlowPage() {
         Follow SparkSession creation, cluster resource negotiation, DAG planning, stage boundaries, task scheduling, executor work, shuffle exchange, and result collection.
       </SectionHeading>
       <section className="flow-shell">
-        <div className="job-overview" aria-label="Clickable Spark job execution overview">
+        <div className="job-overview" data-tour="flow-overview" aria-label="Clickable Spark job execution overview">
           <div className="overview-title"><p className="eyebrow">Clickable Architecture Map</p><h3>Internals of Spark Job Execution</h3></div>
           <div className="overview-controls"><button className="primary" disabled={visibleStep === 8} onClick={() => setVisibleStep(Math.min(8, visibleStep + 1))}>Reveal next step</button><button className="secondary" onClick={() => setVisibleStep(8)}>Reveal all</button><button className="secondary" onClick={() => { setVisibleStep(1); setActive("session"); }}>Reset</button><span>Step {visibleStep} of 8</span></div>
           {overview.map(([key, reveal, className, title, codes, small]) => <button key={`${key}-${reveal}`} disabled={reveal > visibleStep} className={`overview-card ${className} ${reveal > visibleStep ? "is-hidden" : ""} ${key === active ? "active" : ""}`} onClick={() => select(key)}><strong>{title}</strong>{codes.map(code => className.includes("worker") ? <span key={code}>{code}</span> : <code key={code} className={code.includes("count") ? "action-code" : ""}>{code}</code>)}<small>{small}</small>{className.includes("scheduler") ? <div className="overview-mini-dag"><span>RDD 1</span><span>RDD 2</span><span>Shuffle</span><span>Stage 1</span></div> : null}{className.includes("task-overview") ? <div className="overview-task-stack"><span></span><span></span><span></span></div> : null}</button>)}
           {[["line-driver-manager", 3], ["line-driver-context", 2], ["line-context-scheduler", 4], ["line-scheduler-task", 5], ["line-manager-workers", 6], ["line-task-workers", 8]].map(([name, reveal]) => <div key={name} className={`overview-line ${name} ${Number(reveal) > visibleStep ? "is-hidden" : ""}`}></div>)}
         </div>
-        <div className="flow-map" aria-label="Clickable Spark execution flow">{flowOrder.map(([key, label, description], index) => <button key={key} className={`flow-node ${active === key ? "active" : ""}`} onClick={() => select(key)}><span>{index + 1}</span><strong>{label}</strong><small>{description}</small></button>)}</div>
-        <div className="flow-detail" ref={detailRef}>
+        <div className="flow-map" data-tour="flow-map" aria-label="Clickable Spark execution flow">{flowOrder.map(([key, label, description], index) => <button key={key} className={`flow-node ${active === key ? "active" : ""}`} onClick={() => select(key)}><span>{index + 1}</span><strong>{label}</strong><small>{description}</small></button>)}</div>
+        <div className="flow-detail" data-tour="flow-detail" ref={detailRef}>
           <div className="flow-detail-header"><div><p className="eyebrow">{step.category}</p><h3>{step.title}</h3></div><span className="badge">{step.badge}</span></div>
           <div className="flow-content-grid">
             <div className="panel-flat"><h4>What Happens</h4><p>{step.explanation}</p></div>

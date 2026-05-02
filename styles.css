@@ -116,6 +116,14 @@ nav a:hover {
   color: var(--text);
 }
 
+.tour-launch {
+  min-height: 28px;
+  padding: 4px 9px;
+  border-color: rgba(34, 211, 238, 0.4);
+  color: #cffafe;
+  font-size: 0.72rem;
+}
+
 main {
   width: min(1240px, calc(100% - 32px));
   margin: 0 auto;
@@ -1657,6 +1665,74 @@ td {
   line-height: 1.55;
 }
 
+.tour-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.tour-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.62);
+  pointer-events: auto;
+}
+
+.tour-highlight {
+  position: fixed;
+  z-index: 101;
+  border: 2px solid rgba(34, 211, 238, 0.9);
+  border-radius: 10px;
+  box-shadow: 0 0 0 9999px rgba(2, 6, 23, 0.42), 0 0 32px rgba(34, 211, 238, 0.28);
+  pointer-events: none;
+}
+
+.tour-card {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 102;
+  width: min(390px, calc(100vw - 32px));
+  padding: 18px;
+  border: 1px solid rgba(34, 211, 238, 0.38);
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(17, 24, 39, 0.98), rgba(15, 23, 42, 0.98));
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.44);
+  pointer-events: auto;
+}
+
+.tour-progress {
+  color: var(--cyan);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.tour-card h2 {
+  margin: 8px 0 8px;
+  font-size: 1.15rem;
+}
+
+.tour-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.tour-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.tour-actions button {
+  min-height: 32px;
+  font-size: 0.76rem;
+}
+
 @media (max-width: 1040px) {
   .track-grid,
   .concept-grid {
@@ -1742,5 +1818,12 @@ td {
     bottom: -16px;
     width: 2px;
     height: 16px;
+  }
+
+  .tour-card {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    width: auto;
   }
 }

@@ -97,7 +97,7 @@ export function LazyEvaluationPage() {
           </div>
         </aside>
 
-        <section className="panel builder-panel">
+        <section className="panel builder-panel" data-tour="lazy-builder">
           <div className="panel-heading">
             <h2>Query Builder</h2>
             <button className="secondary" onClick={() => { setSelectedOps([]); setLastAction(null); setHasExecuted(false); }}>Reset</button>
@@ -106,10 +106,10 @@ export function LazyEvaluationPage() {
             <div className="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
             <pre><code>{code}</code></pre>
           </div>
-          <div className="controls" aria-label="Transformation controls">
+          <div className="controls" data-tour="lazy-controls" aria-label="Transformation controls">
             {operations.map(op => <button key={op.id} onClick={() => { setSelectedOps([...selectedOps, op]); setHasExecuted(false); }}>{op.label}</button>)}
           </div>
-          <div className="action-row">
+          <div className="action-row" data-tour="lazy-actions">
             <button className="primary" onClick={() => runAction("show")}>Run show()</button>
             <button className="primary" onClick={() => runAction("count")}>Run count()</button>
           </div>

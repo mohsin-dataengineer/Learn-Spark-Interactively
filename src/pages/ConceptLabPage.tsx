@@ -122,12 +122,12 @@ export function ConceptLabPage() {
         Select a concept, adjust controls, and watch code, execution visuals, and explanations update together.
       </SectionHeading>
       <section className="simulation-shell">
-        <aside className="simulation-sidebar" aria-label="Spark concept selector">{tabs.map(([key, label, description]) => <button key={key} className={`sim-tab ${active === key ? "active" : ""}`} onClick={() => setActive(key)}><span>{label}</span><small>{description}</small></button>)}</aside>
+        <aside className="simulation-sidebar" data-tour="sim-tabs" aria-label="Spark concept selector">{tabs.map(([key, label, description]) => <button key={key} className={`sim-tab ${active === key ? "active" : ""}`} onClick={() => setActive(key)}><span>{label}</span><small>{description}</small></button>)}</aside>
         <div className="simulation-main">
           <div className="simulation-header"><div><p className="eyebrow">{sim.level}</p><h3>{sim.title}</h3></div><span className="badge">{sim.badge}</span></div>
           <div className="simulation-grid">
-            <div className="sim-controls panel-flat"><h4>Controls</h4>{sim.controls.map(control => <label className="sim-control" key={control.key}><span>{control.label}{control.type === "range" ? <>: <strong>{values[control.key]}</strong></> : null}</span>{control.type === "select" ? <select value={String(values[control.key])} onChange={event => update(control.key, event.target.value)}>{control.options.map(option => <option key={option} value={option}>{option}</option>)}</select> : <input type="range" min={control.min} max={control.max} value={Number(values[control.key])} onChange={event => update(control.key, Number(event.target.value))} />}</label>)}</div>
-            <div className="sim-visual panel-flat"><h4>Visual Execution</h4><div className="partition-visual">{sim.visual}</div></div>
+            <div className="sim-controls panel-flat" data-tour="sim-controls"><h4>Controls</h4>{sim.controls.map(control => <label className="sim-control" key={control.key}><span>{control.label}{control.type === "range" ? <>: <strong>{values[control.key]}</strong></> : null}</span>{control.type === "select" ? <select value={String(values[control.key])} onChange={event => update(control.key, event.target.value)}>{control.options.map(option => <option key={option} value={option}>{option}</option>)}</select> : <input type="range" min={control.min} max={control.max} value={Number(values[control.key])} onChange={event => update(control.key, Number(event.target.value))} />}</label>)}</div>
+            <div className="sim-visual panel-flat" data-tour="sim-visual"><h4>Visual Execution</h4><div className="partition-visual">{sim.visual}</div></div>
             <div className="sim-code panel-flat"><h4>Spark Example</h4><pre><code>{sim.code}</code></pre></div>
             <div className="sim-explain panel-flat"><h4>What Spark Is Doing</h4><p>{sim.explanation}</p><div className="sim-result">{sim.result}</div></div>
           </div>

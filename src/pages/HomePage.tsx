@@ -22,7 +22,7 @@ export function HomePage() {
             performance. Pick a module and learn at your pace.
           </p>
           <div className="hero-actions">
-            <Link className="button-link primary-link" to="/execution-flow">Start with execution flow</Link>
+            <Link className="button-link primary-link" data-tour="start-execution" to="/execution-flow">Start with execution flow</Link>
             <Link className="button-link ghost-link" to="/lazy-evaluation">Open live explorer</Link>
           </div>
         </div>
@@ -38,7 +38,7 @@ export function HomePage() {
           <p className="eyebrow">Learning Paths</p>
           <h2>Choose the page you want to study.</h2>
         </div>
-        <div className="track-grid">
+        <div className="track-grid" data-tour="learning-cards">
           {cards.map(([number, title, description, to, featured]) => (
             <Link key={to} className={`track-card page-card ${featured ? "featured-card" : ""}`} to={to}>
               <div className="track-number">{number}</div>
