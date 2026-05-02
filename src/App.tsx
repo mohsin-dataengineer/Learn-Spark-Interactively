@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import { HomePage } from "./pages/HomePage";
 import { CurriculumPage } from "./pages/CurriculumPage";
+import { CurriculumTopicPage } from "./pages/CurriculumTopicPage";
 import { LazyEvaluationPage } from "./pages/LazyEvaluationPage";
 import { ExecutionFlowPage } from "./pages/ExecutionFlowPage";
 import { ConceptLabPage } from "./pages/ConceptLabPage";
@@ -14,6 +15,7 @@ export default function App() {
       <Route element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path="curriculum" element={<CurriculumPage />} />
+        <Route path="curriculum/:slug" element={<CurriculumTopicPage />} />
         <Route path="lazy-evaluation" element={<LazyEvaluationPage />} />
         <Route path="execution-flow" element={<ExecutionFlowPage />} />
         <Route path="concept-lab" element={<ConceptLabPage />} />
