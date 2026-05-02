@@ -47,45 +47,46 @@ const operations = {
   },
 };
 
-const state = {
-  selectedOps: [],
-  lastAction: null,
-  resultRows: sourceRows,
-  hasExecuted: false,
-};
+if (document.getElementById("codePreview")) {
+  const state = {
+    selectedOps: [],
+    lastAction: null,
+    resultRows: sourceRows,
+    hasExecuted: false,
+  };
 
-const elements = {
-  codePreview: document.getElementById("codePreview"),
-  queuedCount: document.getElementById("queuedCount"),
-  stageCount: document.getElementById("stageCount"),
-  rowCount: document.getElementById("rowCount"),
-  executionStatus: document.getElementById("executionStatus"),
-  planList: document.getElementById("planList"),
-  dagCanvas: document.getElementById("dagCanvas"),
-  shuffleBadge: document.getElementById("shuffleBadge"),
-  sourceTable: document.getElementById("sourceTable"),
-  resultTable: document.getElementById("resultTable"),
-  resultHint: document.getElementById("resultHint"),
-};
+  const elements = {
+    codePreview: document.getElementById("codePreview"),
+    queuedCount: document.getElementById("queuedCount"),
+    stageCount: document.getElementById("stageCount"),
+    rowCount: document.getElementById("rowCount"),
+    executionStatus: document.getElementById("executionStatus"),
+    planList: document.getElementById("planList"),
+    dagCanvas: document.getElementById("dagCanvas"),
+    shuffleBadge: document.getElementById("shuffleBadge"),
+    sourceTable: document.getElementById("sourceTable"),
+    resultTable: document.getElementById("resultTable"),
+    resultHint: document.getElementById("resultHint"),
+  };
 
-document.querySelectorAll("[data-op]").forEach(button => {
-  button.addEventListener("click", () => {
-    const op = operations[button.dataset.op];
-    state.selectedOps.push(op);
+  document.querySelectorAll("[data-op]").forEach(button => {
+    button.addEventListener("click", () => {
+      const op = operations[button.dataset.op];
+      state.selectedOps.push(op);
+      state.hasExecuted = false;
+      render();
+    });
+  });
+
+  document.getElementById("showButton").addEventListener("click", () => runAction("show"));
+  document.getElementById("countButton").addEventListener("click", () => runAction("count"));
+  document.getElementById("resetButton").addEventListener("click", () => {
+    state.selectedOps = [];
+    state.lastAction = null;
+    state.resultRows = sourceRows;
     state.hasExecuted = false;
     render();
   });
-});
-
-document.getElementById("showButton").addEventListener("click", () => runAction("show"));
-document.getElementById("countButton").addEventListener("click", () => runAction("count"));
-document.getElementById("resetButton").addEventListener("click", () => {
-  state.selectedOps = [];
-  state.lastAction = null;
-  state.resultRows = sourceRows;
-  state.hasExecuted = false;
-  render();
-});
 
 function runAction(action) {
   state.lastAction = action;
@@ -228,7 +229,8 @@ function renderTable(table, rows) {
   table.innerHTML = `<thead><tr>${header}</tr></thead><tbody>${body}</tbody>`;
 }
 
-render();
+  render();
+}
 
 const flowSteps = {
   session: {
@@ -361,62 +363,63 @@ Driver receives:
   },
 };
 
-const flowElements = {
-  nodes: Array.from(document.querySelectorAll(".flow-node")),
-  overviewNodes: Array.from(document.querySelectorAll("[data-flow-jump]")),
-  revealItems: Array.from(document.querySelectorAll("[data-reveal-step]")),
-  revealNext: document.getElementById("revealNextFlow"),
-  revealAll: document.getElementById("revealAllFlow"),
-  revealReset: document.getElementById("resetFlowReveal"),
-  revealProgress: document.getElementById("revealProgress"),
-  detail: document.querySelector(".flow-detail"),
-  category: document.getElementById("flowCategory"),
-  title: document.getElementById("flowTitle"),
-  badge: document.getElementById("flowBadge"),
-  explanation: document.getElementById("flowExplanation"),
-  code: document.getElementById("flowCode"),
-  visual: document.getElementById("flowVisual"),
-  checkpoint: document.getElementById("flowCheckpoint"),
-  tip: document.getElementById("flowTip"),
-};
+if (document.querySelector(".flow-node")) {
+  const flowElements = {
+    nodes: Array.from(document.querySelectorAll(".flow-node")),
+    overviewNodes: Array.from(document.querySelectorAll("[data-flow-jump]")),
+    revealItems: Array.from(document.querySelectorAll("[data-reveal-step]")),
+    revealNext: document.getElementById("revealNextFlow"),
+    revealAll: document.getElementById("revealAllFlow"),
+    revealReset: document.getElementById("resetFlowReveal"),
+    revealProgress: document.getElementById("revealProgress"),
+    detail: document.querySelector(".flow-detail"),
+    category: document.getElementById("flowCategory"),
+    title: document.getElementById("flowTitle"),
+    badge: document.getElementById("flowBadge"),
+    explanation: document.getElementById("flowExplanation"),
+    code: document.getElementById("flowCode"),
+    visual: document.getElementById("flowVisual"),
+    checkpoint: document.getElementById("flowCheckpoint"),
+    tip: document.getElementById("flowTip"),
+  };
 
-let activeFlowStep = "session";
-let visibleFlowStep = 1;
-const maxFlowRevealStep = 8;
+  let activeFlowStep = "session";
+  let visibleFlowStep = 1;
+  const maxFlowRevealStep = 8;
 
-flowElements.nodes.forEach(node => {
-  node.addEventListener("click", () => {
-    activeFlowStep = node.dataset.flow;
-    renderFlowStep();
-    scrollFlowDetailIntoView();
+  flowElements.nodes.forEach(node => {
+    node.addEventListener("click", () => {
+      activeFlowStep = node.dataset.flow;
+      renderFlowStep();
+      scrollFlowDetailIntoView();
+    });
   });
-});
 
-flowElements.overviewNodes.forEach(node => {
-  node.addEventListener("click", () => {
-    if (Number(node.dataset.revealStep) > visibleFlowStep) return;
-    activeFlowStep = node.dataset.flowJump;
-    renderFlowStep();
-    scrollFlowDetailIntoView();
+  flowElements.overviewNodes.forEach(node => {
+    node.addEventListener("click", () => {
+      if (Number(node.dataset.revealStep) > visibleFlowStep) return;
+      activeFlowStep = node.dataset.flowJump;
+      renderFlowStep();
+      scrollFlowDetailIntoView();
+    });
   });
-});
 
-flowElements.revealNext.addEventListener("click", () => {
-  visibleFlowStep = Math.min(maxFlowRevealStep, visibleFlowStep + 1);
-  renderFlowReveal();
-});
+  flowElements.revealNext.addEventListener("click", () => {
+    visibleFlowStep = Math.min(maxFlowRevealStep, visibleFlowStep + 1);
+    renderFlowReveal();
+  });
 
-flowElements.revealAll.addEventListener("click", () => {
-  visibleFlowStep = maxFlowRevealStep;
-  renderFlowReveal();
-});
+  flowElements.revealAll.addEventListener("click", () => {
+    visibleFlowStep = maxFlowRevealStep;
+    renderFlowReveal();
+  });
 
-flowElements.revealReset.addEventListener("click", () => {
-  visibleFlowStep = 1;
-  activeFlowStep = "session";
-  renderFlowReveal();
-  renderFlowStep();
-});
+  flowElements.revealReset.addEventListener("click", () => {
+    visibleFlowStep = 1;
+    activeFlowStep = "session";
+    renderFlowReveal();
+    renderFlowStep();
+  });
 
 function renderFlowStep() {
   const step = flowSteps[activeFlowStep];
@@ -495,32 +498,34 @@ function renderFlowVisual(type) {
   return visuals[type];
 }
 
-renderFlowStep();
-renderFlowReveal();
+  renderFlowStep();
+  renderFlowReveal();
+}
 
-const simState = {
-  active: "partitions",
-  values: {
-    partitions: { partitions: 4, rows: 16 },
-    shuffle: { partitions: 4, keys: 3 },
-    joins: { strategy: "broadcast", factRows: 14, dimRows: 4 },
-    cache: { cached: "no", runs: 2 },
-    skew: { hotKey: 65, salt: "off" },
-    streaming: { watermark: 10, lateEvents: 3 },
-  },
-};
+if (document.getElementById("simControls")) {
+  const simState = {
+    active: "partitions",
+    values: {
+      partitions: { partitions: 4, rows: 16 },
+      shuffle: { partitions: 4, keys: 3 },
+      joins: { strategy: "broadcast", factRows: 14, dimRows: 4 },
+      cache: { cached: "no", runs: 2 },
+      skew: { hotKey: 65, salt: "off" },
+      streaming: { watermark: 10, lateEvents: 3 },
+    },
+  };
 
-const simElements = {
-  tabs: Array.from(document.querySelectorAll(".sim-tab")),
-  level: document.getElementById("simLevel"),
-  title: document.getElementById("simTitle"),
-  badge: document.getElementById("simBadge"),
-  controls: document.getElementById("simControls"),
-  visual: document.getElementById("simVisual"),
-  code: document.getElementById("simCode"),
-  explanation: document.getElementById("simExplanation"),
-  result: document.getElementById("simResult"),
-};
+  const simElements = {
+    tabs: Array.from(document.querySelectorAll(".sim-tab")),
+    level: document.getElementById("simLevel"),
+    title: document.getElementById("simTitle"),
+    badge: document.getElementById("simBadge"),
+    controls: document.getElementById("simControls"),
+    visual: document.getElementById("simVisual"),
+    code: document.getElementById("simCode"),
+    explanation: document.getElementById("simExplanation"),
+    result: document.getElementById("simResult"),
+  };
 
 const simulations = {
   partitions: {
@@ -764,4 +769,5 @@ function renderStreamingTimeline(watermark, lateEvents) {
   </div>`;
 }
 
-renderSimulation();
+  renderSimulation();
+}

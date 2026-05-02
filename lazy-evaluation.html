@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lazy Evaluation Explorer | Spark Studio</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Interactive Apache Spark</p>
+        <h1><a href="index.html">Spark Studio</a></h1>
+      </div>
+      <nav aria-label="Site pages">
+        <a href="curriculum.html">Curriculum</a>
+        <a href="lazy-evaluation.html">Explorer</a>
+        <a href="execution-flow.html">Execution Flow</a>
+        <a href="concept-lab.html">Concept Lab</a>
+        <a href="advanced.html">Advanced</a>
+        <a href="roadmap.html">Roadmap</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section-block page-section">
+        <div class="section-heading">
+          <p class="eyebrow">Live Module</p>
+          <h2>Lazy Evaluation Explorer</h2>
+          <p>Add transformations, run an action, and watch Spark build and execute the queued plan.</p>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <aside class="panel lesson-panel">
+          <p class="eyebrow">Lesson</p>
+          <h2>Transformations are lazy</h2>
+          <ol>
+            <li>Add transformations. Notice that the output does not change.</li>
+            <li>Run an action. Spark executes the accumulated plan.</li>
+            <li>Add <code>groupBy</code>. The DAG splits into two stages because a shuffle is required.</li>
+          </ol>
+          <div class="callout">Transformations are lazy. Actions are eager.</div>
+          <div class="mini-metrics">
+            <div><span id="queuedCount">0</span><small>queued</small></div>
+            <div><span id="stageCount">0</span><small>stages</small></div>
+            <div><span id="rowCount">8</span><small>rows</small></div>
+          </div>
+        </aside>
+
+        <section class="panel builder-panel">
+          <div class="panel-heading">
+            <h2>Query Builder</h2>
+            <button id="resetButton" class="secondary">Reset</button>
+          </div>
+
+          <div class="code-window" aria-label="Spark code preview">
+            <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+            <pre id="codePreview"><code>orders</code></pre>
+          </div>
+
+          <div class="controls" aria-label="Transformation controls">
+            <button data-op="filterHighValue">Filter amount &gt;= 50</button>
+            <button data-op="selectCityAmount">Select city, amount</button>
+            <button data-op="withTax">Add tax column</button>
+            <button data-op="groupByCity">Group by city</button>
+          </div>
+
+          <div class="action-row">
+            <button id="showButton" class="primary">Run show()</button>
+            <button id="countButton" class="primary">Run count()</button>
+          </div>
+
+          <div class="status" id="executionStatus">Waiting for transformations. No Spark job has run yet.</div>
+        </section>
+      </section>
+
+      <section class="panel dag-panel">
+        <div class="panel-heading">
+          <h2>Logical Plan and DAG</h2>
+          <span id="shuffleBadge" class="badge">No shuffle</span>
+        </div>
+        <div class="dag-grid">
+          <div>
+            <h3>Queued Plan</h3>
+            <div id="planList" class="plan-list"></div>
+          </div>
+          <div>
+            <h3>Execution Graph</h3>
+            <div id="dagCanvas" class="dag-canvas" aria-label="Spark execution graph"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="results-grid">
+        <section class="panel">
+          <h2>Source Data</h2>
+          <div class="table-wrap"><table id="sourceTable"></table></div>
+        </section>
+        <section class="panel">
+          <h2>Output After Action</h2>
+          <div id="resultHint" class="empty-state">Add transformations, then run an action.</div>
+          <div class="table-wrap"><table id="resultTable"></table></div>
+        </section>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
